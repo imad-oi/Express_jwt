@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 
 const db = require("./db.config");
 const userRoutes = require("./routes/users.routes.js");
+const patientRoutes = require("./routes/patient.routes.js");
 const authRoutes = require("./routes/auth.routes.js");
 const fs = require("fs");
 
@@ -35,7 +36,7 @@ var corsOptions = {
       callback(new Error('Not allowed by CORS'))
     }
   },
-  methods         : ['GET', 'POST', 'PUT', 'DELETE'],
+  methods         : ['GET', 'POST', 'PUT', 'DELETE' , 'PATCH'],
 }
 
 app.use(cors(corsOptions));
@@ -43,6 +44,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/users",checkTokenMiddleware, userRoutes);
+app.use("/api/patients",checkTokenMiddleware, patientRoutes);
 app.use("/api/auth",  authRoutes);
 
 app.get("/", (req, res) => {
